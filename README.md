@@ -30,15 +30,46 @@ Most między [q3sh](https://github.com/SyriusM/q3sh) a warstwą LLM: IPQ (Input 
 
 ## Wymagania
 
-- Python 3.12
-- [MemPalace](https://github.com/SyriusM/mempalace) z bge-m3 (ścieżka w `MEMPALACE_PATH`, domyślnie `~/mempalace`)
-- DuckDB
+- **Python 3.12+** (CachyOS: w systemie; Debian 12: `apt install python3.12 python3.12-venv` z backports lub pyenv)
+- **MemPalace** z bge-m3 (ścieżka w `MEMPALACE_PATH`, domyślnie `~/mempalace`)
+- Pakiety pip: `numpy`, `duckdb`, `rich` (patrz `requirements.txt`)
+- Opcjonalnie: `ephem` (planety), `pytest` (testy) — `requirements-optional.txt`
+
+### Instalacja — CachyOS / Arch
+
+```bash
+sudo pacman -S python python-pip           # python >=3.12 w repo
+python -m venv ~/qsim-venv
+source ~/qsim-venv/bin/activate.fish       # lub: source ~/qsim-venv/bin/activate
+pip install -r requirements.txt
+pip install -r requirements-optional.txt   # opcjonalnie
+```
+
+### Instalacja — Debian 12 (bookworm)
+
+Debian 12 ma Python 3.11 — potrzeba 3.12 z backports lub pyenv:
+
+```bash
+# opcja A: deb.sury.org
+sudo apt install -y software-properties-common
+curl -fsSL https://packages.sury.org/python/README.txt | sudo bash -
+sudo apt update && sudo apt install -y python3.12 python3.12-venv
+
+# opcja B: pyenv (bez sudo po zainstalowaniu pyenv)
+pyenv install 3.12.7 && pyenv local 3.12.7
+
+python3.12 -m venv ~/qsim-venv
+source ~/qsim-venv/bin/activate
+pip install -r requirements.txt
+pip install -r requirements-optional.txt   # opcjonalnie
+```
 
 ## Uruchomienie
 
 ```bash
-export MEMPALACE_PATH=$HOME/mempalace  # opcjonalne
+export MEMPALACE_PATH=$HOME/mempalace      # opcjonalne (taka jest domyślna)
 python demo.py
+pytest tests/                              # testy (jeśli zainstalowany)
 ```
 
 ## Licencja
