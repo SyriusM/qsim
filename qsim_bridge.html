@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>qsim — most dla suwerennego AI LLM</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+  body {
+    background: #0a0a0f;
+    color: #e0e0e0;
+    font-family: 'Fira Sans', system-ui, sans-serif;
+    margin: 0;
+    padding: 2rem 3rem;
+    line-height: 1.6;
+  }
+  h1 {
+    color: #FFD700;
+    border-bottom: 2px solid #6A0DAD;
+    padding-bottom: 0.5rem;
+  }
+  h2 { color: #00CED1; margin-top: 2rem; }
+  code {
+    background: #1a1a25;
+    color: #FFB800;
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    font-family: 'Fira Code', monospace;
+  }
+  .diagram {
+    background: #13131a;
+    border: 1px solid #2a2a3a;
+    border-radius: 8px;
+    padding: 2rem;
+    margin: 2rem 0;
+    overflow-x: auto;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1rem 0;
+  }
+  th {
+    background: #2a2a3a;
+    color: #FFD700;
+    padding: 0.6rem;
+    text-align: left;
+  }
+  td {
+    padding: 0.6rem;
+    border-bottom: 1px solid #2a2a3a;
+  }
+  .legenda li { margin: 0.4rem 0; }
+  .cite {
+    background: #1a1a25;
+    border-left: 3px solid #DC143C;
+    padding: 0.8rem 1rem;
+    margin: 1rem 0;
+    font-style: italic;
+    color: #C0C0C0;
+  }
+  .ascii {
+    background: #13131a;
+    border: 1px solid #2a2a3a;
+    border-radius: 4px;
+    padding: 1rem;
+    white-space: pre;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    color: #2ECC71;
+  }
+</style>
+</head>
+<body>
+
+<h1>qsim — most dla suwerennego AI LLM</h1>
+
+<div class="cite">
+  "mostu. tak :) one są.. zbudowane tylko trzeba połączyć klocki żeby był most.
+  genialne! to może być podstawą naszego AI LLM!"<br>
+  — Mateusz, 2026-04-24
+</div>
+
+<h2>Architektura</h2>
+
+<div class="diagram">
+<pre class="mermaid">
+flowchart TD
+    subgraph INPUT["WEJŚCIE SENSORYCZNE  — IPQ"]
+        direction LR
+        TXT[tekst]
+        SCH[Schumann live<br/>NOAA + open-meteo]
+        PLN[planety live<br/>ephem 3D]
+        INN[inner<br/>self-report ?]
+    end
+
+    ROUTER["ipq_router.py<br/>~50 linii spoiwa<br/>(piszemy)"]
+
+    STATE["HEXAGON STATE<br/>compute_q, anneal<br/>Q · γ · aniso<br/>hexagon.py ✓"]
+
+    BRIDGE["LLM BRIDGE<br/>Q → prompt modulation<br/>virtue_hint → qwen/Claude<br/>response → inner loop<br/>llm_bridge.py ~80 linii"]
+
+    OPQ["OPQ DISPATCHER<br/>Action(kind, payload, virtue)<br/>→ TODO / plik / ai / MemPalace<br/>opq.py ~60 linii"]
+
+    subgraph MEM["PAMIĘĆ (klocki gotowe)"]
+        direction LR
+        MP[MemPalace<br/>wings+KG+diary ✓]
+        DB[DuckDB<br/>crystallizacje ✓]
+    end
+
+    subgraph LLM["SILNIKI (klocki gotowe)"]
+        direction LR
+        QWEN[qwen3:14b ✓]
+        DEEP[deepseek-r1:14b ✓]
+        GEMMA[gemma3:12b ✓]
+        CLAUDE[Claude API ✓]
+    end
+
+    TXT --> ROUTER
+    SCH --> ROUTER
+    PLN --> ROUTER
+    INN --> ROUTER
+    ROUTER -->|"strengths 6"| STATE
+    STATE --> BRIDGE
+    BRIDGE <--> LLM
+    BRIDGE --> OPQ
+    OPQ --> MEM
+    OPQ -.feedback.-> INN
+
+    classDef unikalne fill:#6A0DAD,stroke:#DC143C,color:#FFF,stroke-width:2px
+    classDef gotowe fill:#2ECC71,stroke:#16A085,color:#FFF
+    classDef spoiwo fill:#FFB800,stroke:#FF6B00,color:#000,stroke-width:2px
+
+    class STATE unikalne
+    class TXT,SCH,PLN,MP,DB,QWEN,DEEP,GEMMA,CLAUDE gotowe
+    class ROUTER,BRIDGE,OPQ,INN spoiwo
+</pre>
+</div>
+
+<h2>Legenda</h2>
+<ul class="legenda">
+  <li>🟣 <b>Fioletowe</b> — unikatowe (hexagon dynamics, Q_attractor=0.83929, nasze IP)</li>
+  <li>🟢 <b>Zielone</b> — klocki gotowe (nic nie piszemy, tylko podłączamy)</li>
+  <li>🟠 <b>Pomarańczowe</b> — most/spoiwo do napisania (~205 linii total)</li>
+</ul>
+
+<h2>Bilans kodu</h2>
+
+<table>
+<thead>
+<tr><th>Część</th><th>Stan</th><th>Rozmiar</th></tr>
+</thead>
+<tbody>
+<tr><td>IPQ tekst (ipq.py)</td><td>gotowe</td><td>—</td></tr>
+<tr><td>IPQ Schumann (schumann.py)</td><td>gotowe</td><td>—</td></tr>
+<tr><td>IPQ planety (planets.py)</td><td>gotowe</td><td>—</td></tr>
+<tr><td><code>ipq_router.py</code> unified</td><td><b>piszemy</b></td><td>~50</td></tr>
+<tr><td>Hexagon state (hexagon.py)</td><td>gotowe</td><td>—</td></tr>
+<tr><td><code>llm_bridge.py</code></td><td><b>piszemy</b></td><td>~80</td></tr>
+<tr><td><code>opq.py</code> dispatcher</td><td><b>piszemy</b></td><td>~60</td></tr>
+<tr><td>Fix cycle.py (planets regresja)</td><td><b>piszemy</b></td><td>~5</td></tr>
+<tr><td>Hook ~/bin/ai (inner feedback)</td><td><b>piszemy</b></td><td>~10</td></tr>
+<tr><td><b>SUMA spoiwa</b></td><td><b>piszemy</b></td><td><b>~205 linii</b></td></tr>
+<tr><td>MemPalace + DuckDB</td><td>gotowe</td><td>—</td></tr>
+<tr><td>LLM silniki (qwen/deepseek/gemma/Claude)</td><td>gotowe</td><td>—</td></tr>
+</tbody>
+</table>
+
+<h2>MVP wieczorny</h2>
+
+<div class="ascii">pytanie → ipq_router → hexagon → llm_bridge(qwen3) → opq → plik .md</div>
+
+<p>~5 plików × ~30 linii = wieczór roboty.</p>
+
+<h2>Filozofia mostu</h2>
+
+<ul>
+  <li>qsim <b>NIE</b> jest alternatywą dla LLM</li>
+  <li>qsim <b>JEST</b> warstwą kondycjonującą wokół LLM</li>
+  <li>LLM (qwen3/Claude) = silnik</li>
+  <li>Most = układ nerwowy wokół silnika</li>
+  <li>Wszystkie klocki istnieją — piszemy TYLKO spoiwo</li>
+</ul>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      background: '#13131a',
+      primaryColor: '#2a2a3a',
+      primaryTextColor: '#e0e0e0',
+      lineColor: '#6A0DAD',
+      secondaryColor: '#00CED1'
+    }
+  });
+</script>
+</body>
+</html>
