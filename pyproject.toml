@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qsim"
+version = "0.1.0"
+description = "q3sh semantic quantum simulator — IPQ, hexagon virtues, phase integration"
+readme = "README.md"
+requires-python = ">=3.12"
+license = {text = "MIT"}
+authors = [{name = "Mateusz (syriusm)"}]
+keywords = ["q3sh", "quantum", "semantic", "virtue", "hexagon", "mempalace"]
+classifiers = [
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: POSIX :: Linux",
+    "Intended Audience :: Science/Research",
+]
+dependencies = [
+    "numpy>=1.26",
+    "duckdb>=0.10",
+    "rich>=13.7",
+]
+
+[project.optional-dependencies]
+planets = ["ephem>=4.1"]
+test = ["pytest>=7.4"]
+all = ["ephem>=4.1", "pytest>=7.4"]
+
+[project.urls]
+Homepage = "https://github.com/SyriusM/qsim"
+Issues = "https://github.com/SyriusM/qsim/issues"
+Related = "https://github.com/SyriusM/q3sh"
+
+[project.scripts]
+qsim-demo = "demo:main"
+qsim-handoff-check = "handoff_check:main"
+
+[tool.setuptools]
+py-modules = [
+    "hexagon", "ipq", "db", "cycle", "demo",
+    "quantum", "schumann", "planets",
+    "phase_integration", "phase_sequence", "q_correlations",
+    "handoff_check",
+]
