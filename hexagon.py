@@ -1,7 +1,15 @@
 """
+NETWORK SURFACE: none. Pure math, fully local.
+SPDX-License-Identifier: LicenseRef-Sovereign-MIT-1.0
+See LICENSE for terms.
+
 Matematyka heksagonu 6 cnót na sferze Blocha.
-Q = fidelity correlator (SWSSB PRX Quantum 2025)
-Berry phase z Scientific Reports 2025
+Q = pure-state pairwise fidelity (inspired by SWSSB framework,
+    Lessa et al. PRX Quantum 6, 010344, 2025; arXiv:2405.03639).
+    qsim implementuje pure-state proxy, nie mixed-state SWSSB order parameter.
+Berry phase: Berry, Proc. R. Soc. A 392, 45 (1984);
+    Wilczek-Zee, Phys. Rev. Lett. 52, 2111 (1984);
+    discrete formulation: Resta, Phys. Rev. Lett. 80, 1800 (1998).
 """
 
 from math import sqrt, radians, cos, acos

@@ -1,5 +1,9 @@
 """
 IPQ — pytanie → virtue strengths [s0..s5] w kolejności HEXAGON.
+
+NETWORK SURFACE: none. Fully local (bge-m3 via MemPalace).
+SPDX-License-Identifier: LicenseRef-Sovereign-MIT-1.0
+See LICENSE for terms.
 """
 
 import os

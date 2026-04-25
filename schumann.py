@@ -7,6 +7,14 @@ sigma_mod = f(Kp, pogoda_lokalna)
 
 Pogoda: burza lokalna = źródło Schumanna → sigma_mod wyższy.
 Offline-safe: każde źródło ma niezależny fallback.
+
+NETWORK SURFACE (the only externally-reaching module in qsim):
+  - https://services.swpc.noaa.gov/...  Kp index, GET, no user data, no API key
+  - https://api.open-meteo.com/...      weather, GET, sends lat/lon only at
+                                        location_level>=2, no API key
+Run fully offline: pass live=False to get_schumann().
+SPDX-License-Identifier: LicenseRef-Sovereign-MIT-1.0
+See LICENSE §3 for the full network audit.
 """
 
 import math

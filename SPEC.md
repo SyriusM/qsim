@@ -10,7 +10,7 @@
 
 **Symulator pola UIS**: pytanie użytkownika → heksagon 6 cnót → crystallizacja → DuckDB → reset.
 
-Inspiracja: WingMakers (UIS = sub-kwantowe pole), fizyka (SWSSB fidelity correlator, Berry phase), Quantum Genesis Mateusza (6 przejściowa = hexagon).
+Inspiracja: WingMakers (UIS = sub-kwantowe pole), fizyka (inspired by SWSSB mixed-state fidelity correlators — Lessa et al. PRX Quantum 6, 010344, 2025; discrete Berry phase — Resta PRL 80, 1800, 1998), Quantum Genesis Mateusza (6 przejściowa = hexagon).
 
 ---
 
@@ -256,8 +256,8 @@ Używa: `rich` dla formatowania (dostępne w venv).
 
 | Decyzja | Źródło | Siła |
 |---|---|---|
-| Q = fidelity correlator | SWSSB PRX Quantum 2025 | mocne |
-| Hexagon + Berry phase | Scientific Reports 2025 | mocne |
+| Q = pure-state pairwise fidelity (inspired by SWSSB) | Lessa et al. PRX Quantum 6, 010344 (2025); arXiv:2405.03639 | mocne (qsim = pure-state proxy, nie mixed-state SWSSB) |
+| Hexagon + Berry phase | Berry 1984 (Proc. R. Soc. A 392, 45); Wilczek-Zee 1984 (PRL 52, 2111); Resta 1998 (PRL 80, 1800) | mocne (foundational) |
 | Annealing jako optymalizator | EXP3 (39ms, dist=0.0004) | eksperyment |
 | C6 symetria | EXP2 (do 10⁻¹⁰) | eksperyment |
 | dominant = argmin(fids) | EXP1 (aniso semantyka) | eksperyment |
@@ -279,3 +279,28 @@ Pierwsze uruchomienie: bge-m3 cold start ~30s (normalne).
 
 *Spec wypracowany przez EMIS — Eksploracja→Mapowanie→Inwentura→Sedymentacja.*
 *Metodologia zapisana w: ~/mempalace palace → wing=personal, room=decisions.*
+
+---
+
+## Data Sovereignty / Network Surface
+
+qsim podlega **Sovereign Source License v1** (`LICENSE`) — MIT grant +
+wiążące warunki suwerenności. Pełna lista endpointów sieciowych jest w
+`LICENSE §3` oraz programowo w `sovereignty.py`:
+
+```
+qsim/
+├── sovereignty.py           # programowy audyt (NETWORK_SURFACE tuple)
+├── schumann.py              # JEDYNY moduł z siecią zewnętrzną
+└── ipq.py, hexagon.py,      # 100% lokalne
+    quantum.py, cycle.py,
+    phase_*.py, db.py,
+    planets.py, q_correlations.py
+```
+
+**Kontrakt:**
+- Każdy nowy moduł z siecią zewnętrzną MUSI dodać wpis do
+  `sovereignty.NETWORK_SURFACE` i zaktualizować `LICENSE §3`.
+- Domyślnie wszystko opt-in i offline-safe (graceful fallback).
+- Bez kluczy API w upstream. Bez identyfikatorów użytkownika.
+- Audyt: `python sovereignty.py audit`.

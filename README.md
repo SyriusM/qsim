@@ -74,4 +74,19 @@ pytest tests/                              # testy (jeśli zainstalowany)
 
 ## Licencja
 
-Suwerenność danych: qsim nie wysyła żadnych danych użytkownika do zewnętrznych API. Cała logika działa lokalnie.
+**[Sovereign Source License v1](LICENSE)** — MIT grant + wiążące warunki
+suwerenności w jednym dokumencie.
+
+To jest **MIT-derived, ale NIE czysty MIT** (nie OSI-approved). Licencja
+dodaje wiążące warunki: brak ukrytej telemetrii, local by default, pełny
+audyt powierzchni sieciowej, zakaz usuwania sekcji suwerenności. Forki
+mogą zaostrzać te warunki, ale nie mogą ich osłabiać.
+
+Programowy audyt powierzchni sieciowej:
+```bash
+python sovereignty.py audit
+```
+
+Powierzchnia sieciowa upstream: tylko `schumann.py` → NOAA Kp + Open-Meteo
+(opt-in `live=True`, bez kluczy API, bez user data poza opcjonalnym
+lat/lon na poziomie 2). Reszta modułów — w pełni lokalna. Zob. LICENSE §3.
